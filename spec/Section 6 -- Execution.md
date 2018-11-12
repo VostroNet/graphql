@@ -138,9 +138,9 @@ ExecuteQuery(query, schema, variableValues, initialValue):
 
 If the operation is a mutation, the result of the operation is the result of
 executing the mutation’s top level selection set on the mutation root
-object type. This selection set should be executed serially.
+object type. This selection set and any sub selection set's should be executed serially.
 
-It is expected that the top level fields in a mutation operation perform
+It is expected that all fields in a mutation operation perform
 side-effects on the underlying data system. Serial execution of the provided
 mutations ensures against race conditions during these side-effects.
 
@@ -148,7 +148,7 @@ ExecuteMutation(mutation, schema, variableValues, initialValue):
 
   * Let {mutationType} be the root Mutation type in {schema}.
   * Assert: {mutationType} is an Object type.
-  * Let {selectionSet} be the top level Selection Set in {mutation}.
+  * Let {selectionSet} be the any Selection Set in {mutation}.
   * Let {data} be the result of running
     {ExecuteSelectionSet(selectionSet, mutationType, initialValue, variableValues)}
     *serially*.
